@@ -37,7 +37,7 @@ class TransactionHandler extends AbstractHandler
     public function creditCardTransaction(
         $amount,
         Card $card,
-        Customer $customer,
+        Customer $customer = null,
         $installments = 1,
         $capture = true,
         $postBackUrl = null,
@@ -60,8 +60,9 @@ class TransactionHandler extends AbstractHandler
         $transaction = new CreditCardTransaction($transactionData);
         $request = new CreditCardTransactionCreate($transaction);
         $response = $this->client->send($request);
+        $transaction = $this->buildTransaction($response);
 
-        return $this->buildTransaction($response);
+        return $transaction;
     }
 
     /**

@@ -4,7 +4,8 @@ namespace PagarMe\Sdk\Transaction;
 
 class CreditCardTransaction extends AbstractTransaction
 {
-    const PAYMENT_METHOD = 'credit_card';
+    const CREDIT_METHOD = 'credit_card';
+    const DEBIT_METHOD = 'debit_card';
 
     /**
      * @var PagarMe\Sdk\Card\Card
@@ -25,7 +26,6 @@ class CreditCardTransaction extends AbstractTransaction
     public function __construct($transactionData)
     {
         parent::__construct($transactionData);
-        $this->paymentMethod = self::PAYMENT_METHOD;
     }
 
     /**

@@ -34,7 +34,7 @@ class TransactionBuilderTest extends \PHPUnit_Framework_TestCase
             $transaction->getSplitRules()
         );
         $this->assertEquals(
-            CreditCardTransaction::PAYMENT_METHOD,
+            CreditCardTransaction::CREDIT_METHOD,
             $transaction->getPaymentMethod()
         );
     }

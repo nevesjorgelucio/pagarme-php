@@ -2,6 +2,8 @@
 
 namespace PagarMe\Sdk\Transaction\Request;
 
+use PagarMe\Sdk\Card\Card;
+use PagarMe\Sdk\Customer\Customer;
 use PagarMe\Sdk\RequestInterface;
 use PagarMe\Sdk\Transaction\Transaction;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
@@ -28,15 +30,22 @@ class TransactionCreate implements RequestInterface
     public function getPayload()
     {
         $customer = $this->transaction->getCustomer();
-
-        $address  = $customer->getAddress();
-        $phone    = $customer->getPhone();
-
         $transactionData = [
             'amount'         => $this->transaction->getAmount(),
-            'payment_method' => $this->transaction->getPaymentMethod(),
             'postback_url'   => $this->transaction->getPostbackUrl(),
-            'customer' => [
+            'metadata' => $this->transaction->getMetadata()
+        ];
+        $card = $this->transaction->getCard();
+
+        if ($card instanceof Card && empty($card->getHash())) {
+            $transactionData['payment_method'] = $this->transaction->getPaymentMethod();
+        }
+
+        if ($customer instanceof Customer) {
+            $address  = $customer->getAddress();
+            $phone    = $customer->getPhone();
+
+            $transactionData['customer'] = [
                 'name'            => $customer->getName(),
                 'document_number' => $customer->getDocumentNumber(),
                 'email'           => $customer->getEmail(),
@@ -53,9 +62,8 @@ class TransactionCreate implements RequestInterface
                     'ddd'    => (string) $phone['ddd'],
                     'number' => (string) $phone['number']
                 ]
-            ],
-            'metadata' => $this->transaction->getMetadata()
-        ];
+            ];
+        }
 
         if ($this->transaction->getSplitRules() instanceof SplitRuleCollection) {
             $transactionData['split_rules'] = $this->getSplitRulesInfo(

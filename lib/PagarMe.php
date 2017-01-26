@@ -140,6 +140,11 @@ class PagarMe
         );
     }
 
+    public function getClient()
+    {
+        return $this->client;
+    }
+
     /**
      * @return CustomerHandler
      */

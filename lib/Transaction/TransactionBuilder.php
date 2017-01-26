@@ -5,12 +5,14 @@ namespace PagarMe\Sdk\Transaction;
 trait TransactionBuilder
 {
     use \PagarMe\Sdk\SplitRule\SplitRuleBuilder;
+    use \PagarMe\Sdk\Card\CardBuilder;
 
     /**
-     * @param array transactionData
-     * @return Transaction
+     * @param $transactionData
+     * @return BoletoTransaction|CreditCardTransaction
+     * @throws UnsupportedTransaction
      */
-    private function buildTransaction($transactionData)
+    public function buildTransaction($transactionData)
     {
         if (isset($transactionData->split_rules)) {
             $transactionData->split_rules = $this->buildSplitRules(
@@ -18,6 +20,9 @@ trait TransactionBuilder
             );
         }
 
+        if (isset($transactionData->card)) {
+            $transactionData->card = $this->buildCard($transactionData->card);
+        }
         $transactionData->metadata = $this->parseMetadata($transactionData);
 
         $transactionData->date_created = new \DateTime(
@@ -34,8 +39,12 @@ trait TransactionBuilder
 
             return new BoletoTransaction(get_object_vars($transactionData));
         }
+        $availableMethod = [
+            CreditCardTransaction::CREDIT_METHOD,
+            CreditCardTransaction::DEBIT_METHOD
+        ];
 
-        if ($transactionData->payment_method == CreditCardTransaction::PAYMENT_METHOD) {
+        if (in_array($transactionData->payment_method, $availableMethod)) {
             return new CreditCardTransaction(get_object_vars($transactionData));
         }
 

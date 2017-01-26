@@ -71,7 +71,7 @@ class RecipientHandler extends AbstractHandler
     }
 
     /**
-     * @param string $recipientId
+     * @param int $recipientId
      * @param int $count
      * @return Recipient
      */
