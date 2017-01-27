@@ -24,15 +24,17 @@ class TransactionHandler extends AbstractHandler
     use \PagarMe\Sdk\Event\EventBuilder;
 
     /**
-     * @param int $amount
-     * @param PagarMe\Sdk\Card\Card $card
-     * @param PagarMe\Sdk\Customer\Customer $customer
+     * @param $amount
+     * @param Card $card
+     * @param Customer|null $customer
      * @param int $installments
-     * @param boolean $capture
-     * @param string $postBackUrl
-     * @param array $metaData
+     * @param bool $capture
+     * @param null $postBackUrl
+     * @param null $metadata
      * @param array $extraAttributes
-     * @return CreditCardTransaction
+     * @return BoletoTransaction|CreditCardTransaction
+     * @throws UnsupportedTransaction
+     * @throws \PagarMe\Sdk\ClientException
      */
     public function creditCardTransaction(
         $amount,
@@ -60,17 +62,19 @@ class TransactionHandler extends AbstractHandler
         $transaction = new CreditCardTransaction($transactionData);
         $request = new CreditCardTransactionCreate($transaction);
         $response = $this->client->send($request);
-        $transaction = $this->buildTransaction($response);
 
-        return $transaction;
+        return $this->buildTransaction($response);
     }
 
     /**
-     * @param int $amount
-     * @param PagarMe\Sdk\Customer\Customer $customer
-     * @param string $postBackUrl
+     * @param $amount
+     * @param Customer $customer
+     * @param $postBackUrl
+     * @param null $metadata
      * @param array $extraAttributes
-     * @return BoletoTransaction
+     * @return BoletoTransaction|CreditCardTransaction
+     * @throws UnsupportedTransaction
+     * @throws \PagarMe\Sdk\ClientException
      */
     public function boletoTransaction(
         $amount,

@@ -12,7 +12,7 @@ trait TransactionBuilder
      * @return BoletoTransaction|CreditCardTransaction
      * @throws UnsupportedTransaction
      */
-    public function buildTransaction($transactionData)
+    private function buildTransaction($transactionData)
     {
         if (isset($transactionData->split_rules)) {
             $transactionData->split_rules = $this->buildSplitRules(
