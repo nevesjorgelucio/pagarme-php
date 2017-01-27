@@ -45,7 +45,13 @@ trait TransactionBuilder
         ];
 
         if (in_array($transactionData->payment_method, $availableMethod)) {
-            return new CreditCardTransaction(get_object_vars($transactionData));
+            $creditCard = new CreditCardTransaction(get_object_vars($transactionData));
+
+            if (empty($creditCard->getCardHash()) && empty($creditCard->getPaymentMethod())) {
+                $creditCard->setPaymentMethod(CreditCardTransaction::CREDIT_METHOD);
+            }
+
+            return $creditCard;
         }
 
         throw new UnsupportedTransaction(

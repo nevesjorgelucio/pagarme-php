@@ -5,21 +5,22 @@ namespace PagarMe\Sdk\Transaction\Request;
 use PagarMe\Sdk\Card\Card;
 use PagarMe\Sdk\Customer\Customer;
 use PagarMe\Sdk\RequestInterface;
-use PagarMe\Sdk\Transaction\Transaction;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
 use PagarMe\Sdk\SplitRule\SplitRule;
+use PagarMe\Sdk\Transaction\AbstractTransaction;
 
 class TransactionCreate implements RequestInterface
 {
     /**
-     * @var Transaction
+     * @var AbstractTransaction
      */
     protected $transaction;
 
     /**
-     * @param Transaction $transaction
+     * TransactionCreate constructor.
+     * @param AbstractTransaction $transaction
      */
-    public function __construct(Transaction $transaction)
+    public function __construct(AbstractTransaction $transaction)
     {
         $this->transaction = $transaction;
     }
@@ -37,7 +38,7 @@ class TransactionCreate implements RequestInterface
         ];
         $card = $this->transaction->getCard();
 
-        if ($card instanceof Card && empty($card->getHash())) {
+        if ($card instanceof Card && empty($card->getHash()) && ! empty($this->transaction->getPaymentMethod())) {
             $transactionData['payment_method'] = $this->transaction->getPaymentMethod();
         }
 
@@ -91,7 +92,7 @@ class TransactionCreate implements RequestInterface
     }
 
     /**
-     * @param PagarMe\Sdk\SplitRule\SplitRuleCollection $splitRules
+     * @param SplitRuleCollection $splitRules
      * @return array
      */
     private function getSplitRulesInfo(SplitRuleCollection $splitRules)
@@ -112,10 +113,10 @@ class TransactionCreate implements RequestInterface
     }
 
     /**
-     * @param PagarMe\Sdk\SplitRule\SplitRule $splitRule
+     * @param $splitRule
      * @return array
      */
-    private function getRuleValue($splitRule)
+    private function getRuleValue(SplitRule $splitRule)
     {
         if (!is_null($splitRule->getAmount())) {
             return ['amount' => $splitRule->getAmount()];

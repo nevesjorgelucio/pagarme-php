@@ -29,6 +29,17 @@ class CreditCardTransaction extends AbstractTransaction
     }
 
     /**
+     * @param $paymentMethod
+     * @return $this
+     */
+    public function setPaymentMethod($paymentMethod)
+    {
+        $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    /**
      * @return int
      * @codeCoverageIgnore
      */
