@@ -100,6 +100,9 @@ class TransactionCreate implements RequestInterface
         $rules = [];
 
         foreach ($splitRules as $key => $splitRule) {
+            if (! $splitRule instanceof SplitRule) {
+                continue;
+            }
             $rule = [
                 'recipient_id'          => $splitRule->getRecipient()->getId(),
                 'charge_processing_fee' => $splitRule->getChargeProcessingFee(),
