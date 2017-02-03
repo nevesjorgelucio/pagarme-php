@@ -30,7 +30,7 @@ class TransferCreate implements RequestInterface
      */
     public function __construct(
         $amount,
-        Recipient $recipient,
+        Recipient $recipient = null,
         BankAccount $bankAccount = null
     ) {
         $this->amount      = $amount;
@@ -44,9 +44,17 @@ class TransferCreate implements RequestInterface
     public function getPayload()
     {
         $bankAccountId = null;
+        $recipientId = null;
+
         if ($this->bankAccount instanceof BankAccount) {
             $bankAccountId = $this->bankAccount->getId();
         }
+
+        var_dump([
+            'amount'          => $this->amount,
+            'recipient_id'    => $this->recipient->getId(),
+            'bank_account_id' => $bankAccountId
+        ]);
 
         return [
             'amount'          => $this->amount,

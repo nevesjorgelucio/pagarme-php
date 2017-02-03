@@ -57,6 +57,16 @@ class Payable
     private $dateCreated;
 
     /**
+     * @var
+     */
+    private $paymentMethod;
+
+    /**
+     * @var
+     */
+    private $recipientId;
+
+    /**
      * @param array bulkAnticipationData
      */
     public function __construct($bulkAnticipationData)
@@ -146,11 +156,28 @@ class Payable
     }
 
     /**
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public function getPaymentMethod()
+    {
+        return $this->paymentMethod;
+    }
+
+    /**
      * @return \DateTime
      * @codeCoverageIgnore
      */
     public function getDateCreated()
     {
         return $this->dateCreated;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecipientId()
+    {
+        return $this->recipientId;
     }
 }

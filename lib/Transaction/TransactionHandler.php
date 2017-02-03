@@ -3,7 +3,8 @@
 namespace PagarMe\Sdk\Transaction;
 
 use PagarMe\Sdk\AbstractHandler;
-use PagarMe\Sdk\Client;
+use PagarMe\Sdk\Event\EventBuilder;
+use PagarMe\Sdk\Payable\PayableBuilder;
 use PagarMe\Sdk\Transaction\Request\CreditCardTransactionCreate;
 use PagarMe\Sdk\Transaction\Request\BoletoTransactionCreate;
 use PagarMe\Sdk\Transaction\Request\TransactionGet;
@@ -16,12 +17,13 @@ use PagarMe\Sdk\Transaction\Request\TransactionPay;
 use PagarMe\Sdk\BankAccount\BankAccount;
 use PagarMe\Sdk\Card\Card;
 use PagarMe\Sdk\Customer\Customer;
-use PagarMe\Sdk\Recipient\Recipient;
+use PagarMe\Sdk\Transaction\Request\TransactionPayables;
 
 class TransactionHandler extends AbstractHandler
 {
     use TransactionBuilder;
-    use \PagarMe\Sdk\Event\EventBuilder;
+    use EventBuilder;
+    use PayableBuilder;
 
     /**
      * @param $amount
@@ -161,8 +163,10 @@ class TransactionHandler extends AbstractHandler
 
     /**
      * @param BoletoTransaction $transaction
-     * @param PagarMe\Sdk\BankAccount\BankAccount $bankAccount
-     * @return BoletoTransaction
+     * @param BankAccount $bankAccount
+     * @return BoletoTransaction|CreditCardTransaction
+     * @throws UnsupportedTransaction
+     * @throws \PagarMe\Sdk\ClientException
      */
     public function boletoRefund(
         BoletoTransaction $transaction,
@@ -185,6 +189,25 @@ class TransactionHandler extends AbstractHandler
         $response = $this->client->send($request);
 
         return $this->buildTransaction($response);
+    }
+
+    /**
+     * @param AbstractTransaction $transaction
+     * @return array
+     */
+    public function payables(AbstractTransaction $transaction)
+    {
+        $request = new TransactionPayables($transaction);
+
+        $response = $this->client->send($request);
+
+        $payables = [];
+
+        foreach ($response as $payableData) {
+            $payables[] = $this->buildPayable($payableData);
+        }
+
+        return $payables;
     }
 
     /**

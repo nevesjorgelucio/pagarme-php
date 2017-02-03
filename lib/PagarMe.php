@@ -309,7 +309,7 @@ class PagarMe
     }
 
     /**
-     * @return BalanceOperationsHandler
+     * @return BalanceOperationHandler
      */
     public function balanceOperation()
     {

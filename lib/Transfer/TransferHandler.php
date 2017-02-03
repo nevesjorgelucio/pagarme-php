@@ -20,7 +20,7 @@ class TransferHandler extends AbstractHandler
      */
     public function create(
         $amount,
-        Recipient $recipient,
+        Recipient $recipient = null,
         BankAccount $bankAccount = null
     ) {
         $request = new TransferCreate(
