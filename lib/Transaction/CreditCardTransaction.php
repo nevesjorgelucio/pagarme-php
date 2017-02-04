@@ -2,8 +2,12 @@
 
 namespace PagarMe\Sdk\Transaction;
 
+use PagarMe\Sdk\SplitRule\SplitRuleBuilder;
+
 class CreditCardTransaction extends AbstractTransaction
 {
+    use SplitRuleBuilder;
+
     const CREDIT_METHOD = 'credit_card';
     const DEBIT_METHOD = 'debit_card';
 
@@ -26,6 +30,12 @@ class CreditCardTransaction extends AbstractTransaction
     public function __construct($transactionData)
     {
         parent::__construct($transactionData);
+
+        if (isset($transactionData['split_rules'])) {
+            $obj = json_encode($transactionData['split_rules']);
+
+            $this->splitRules = $this->buildSplitRules(json_decode($obj));
+        }
     }
 
     /**

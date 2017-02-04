@@ -198,9 +198,7 @@ class TransactionHandler extends AbstractHandler
     public function payables(AbstractTransaction $transaction)
     {
         $request = new TransactionPayables($transaction);
-
         $response = $this->client->send($request);
-
         $payables = [];
 
         foreach ($response as $payableData) {
