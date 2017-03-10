@@ -14,14 +14,18 @@ class BalanceOperationHandler extends AbstractHandler
     use \PagarMe\Sdk\BalanceOperation\OperationBuilder;
 
     /**
-     * @param int $page
-     * @param int $count
-     * @param string $status
+     * @param null $page
+     * @param null $count
+     * @param null $status
+     * @param null $recipient
+     * @param null $start
+     * @param null $end
      * @return array
+     * @throws \PagarMe\Sdk\ClientException
      */
-    public function getList($page = null, $count = null, $status = null)
+    public function getList($page = null, $count = null, $status = null, $recipient = null, $start = null, $end = null)
     {
-        $request = new BalanceOperationList($page, $count, $status);
+        $request = new BalanceOperationList($page, $count, $status, $recipient, $start, $end);
 
         $response = $this->client->send($request);
         $operations = [];

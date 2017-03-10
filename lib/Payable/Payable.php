@@ -26,6 +26,8 @@ class Payable
      */
     private $fee;
 
+    private $anticipationFee;
+
     /**
      * @var int
      */
@@ -45,6 +47,11 @@ class Payable
      * @var \DateTime
      */
     private $paymentDate;
+
+    /**
+     * @var \DateTime
+     */
+    private $originalPaymentDate;
 
     /**
      * @var string
@@ -147,6 +154,14 @@ class Payable
     }
 
     /**
+     * @return \DateTime
+     */
+    public function getOriginalPaymentDate()
+    {
+        return $this->originalPaymentDate;
+    }
+
+    /**
      * @return string
      * @codeCoverageIgnore
      */
@@ -179,5 +194,13 @@ class Payable
     public function getRecipientId()
     {
         return $this->recipientId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAnticipationFee()
+    {
+        return $this->anticipationFee;
     }
 }

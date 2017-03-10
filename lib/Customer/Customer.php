@@ -153,4 +153,76 @@ class Customer
     {
         return $this->documentType;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDdd()
+    {
+        return $this->ddd;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStreetNumber()
+    {
+        return $this->streetNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZipcode()
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComplementary()
+    {
+        return $this->complementary;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNeighborhood()
+    {
+        return $this->neighborhood;
+    }
 }

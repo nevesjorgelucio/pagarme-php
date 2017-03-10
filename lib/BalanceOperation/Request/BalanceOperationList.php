@@ -23,15 +23,37 @@ class BalanceOperationList implements RequestInterface
     private $status;
 
     /**
-     * @param int $page
-     * @param int $count
-     * @param int $status
+     * @var
      */
-    public function __construct($page, $count, $status)
+    private $start;
+
+    /**
+     * @var
+     */
+    private $end;
+
+    /**
+     * @var
+     */
+    private $recipient;
+
+    /**
+     * BalanceOperationList constructor.
+     * @param $page
+     * @param $count
+     * @param $status
+     * @param null $recipient
+     * @param null $start
+     * @param null $end
+     */
+    public function __construct($page, $count, $status, $recipient = null, $start = null, $end = null)
     {
         $this->page   = $page;
         $this->count  = $count;
         $this->status = $status;
+        $this->recipient = $recipient;
+        $this->start = $start;
+        $this->end = $end;
     }
 
     /**
@@ -42,7 +64,10 @@ class BalanceOperationList implements RequestInterface
         return [
             'page'   => $this->page,
             'count'  => $this->count,
-            'status' => $this->status
+            'status' => $this->status,
+            'recipient_id' => $this->recipient,
+            'start_date' => $this->start,
+            'end_date' => $this->end
         ];
     }
 

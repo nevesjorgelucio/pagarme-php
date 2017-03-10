@@ -51,6 +51,16 @@ class SplitRuleCollection implements \ArrayAccess, \Iterator
         $this->position = 0;
     }
 
+    public function getRules()
+    {
+        return $this->rules;
+    }
+
+    public function count()
+    {
+        return count($this->rules);
+    }
+
     public function current()
     {
         return $this->rules[$this->position];

@@ -50,12 +50,6 @@ class TransferCreate implements RequestInterface
             $bankAccountId = $this->bankAccount->getId();
         }
 
-        var_dump([
-            'amount'          => $this->amount,
-            'recipient_id'    => $this->recipient->getId(),
-            'bank_account_id' => $bankAccountId
-        ]);
-
         return [
             'amount'          => $this->amount,
             'recipient_id'    => $this->recipient->getId(),

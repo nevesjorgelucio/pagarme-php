@@ -36,6 +36,10 @@ trait OperationBuilder
             return $this->buildTransfer($movementData);
         }
 
+        if ($movementData->object == 'fee_collection') {
+            return $movementData->object;
+        }
+
         throw new \Exception(
             sprintf(
                 "Unknow movement type supplied: %s",

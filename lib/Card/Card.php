@@ -167,4 +167,14 @@ class Card
     {
         return $this->hash;
     }
+
+    /**
+     * @param string $hash
+     * @return Card
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+        return $this;
+    }
 }
