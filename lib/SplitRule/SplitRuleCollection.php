@@ -4,7 +4,6 @@ namespace PagarMe\Sdk\SplitRule;
 
 class SplitRuleCollection implements \ArrayAccess, \Iterator
 {
-
     /**
      * @var array $rules
      */
@@ -79,5 +78,16 @@ class SplitRuleCollection implements \ArrayAccess, \Iterator
     public function valid()
     {
         return isset($this->rules[$this->position]);
+    }
+
+    /**
+     * @param SplitRule $rule
+     * @return $this
+     */
+    public function addRule(SplitRule $rule)
+    {
+        $this->rules[] = $rule;
+
+        return $this;
     }
 }
