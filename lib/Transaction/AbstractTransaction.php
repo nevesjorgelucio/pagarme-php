@@ -152,6 +152,8 @@ abstract class AbstractTransaction
      */
     protected $splitRules;
 
+    protected $card;
+
     /**
      * @param array $transactionData
      */
