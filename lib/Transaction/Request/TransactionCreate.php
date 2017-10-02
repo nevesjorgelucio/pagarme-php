@@ -36,11 +36,11 @@ class TransactionCreate implements RequestInterface
             'postback_url'   => $this->transaction->getPostbackUrl(),
             'metadata' => $this->transaction->getMetadata()
         ];
-        $card = $this->transaction->getCard();
+        //$card = $this->transaction->getCard();
 
-        if ($card instanceof Card && empty($card->getHash()) && ! empty($this->transaction->getPaymentMethod())) {
+        //if ($card instanceof Card && empty($card->getHash()) && ! empty($this->transaction->getPaymentMethod())) {
             $transactionData['payment_method'] = $this->transaction->getPaymentMethod();
-        }
+        //}
 
         if ($customer instanceof Customer) {
             $address  = $customer->getAddress();

@@ -12,6 +12,16 @@ class BoletoTransaction extends AbstractTransaction
     protected $boletoExpirationDate;
 
     /**
+     * @var string
+     */
+    protected $boletoUrl;
+
+    /**
+     * @var string
+     */
+    protected $boletoBarcode;
+
+    /**
      * @param array $transactionData
      */
     public function __construct($transactionData)
@@ -27,5 +37,37 @@ class BoletoTransaction extends AbstractTransaction
     public function getBoletoExpirationDate()
     {
         return $this->boletoExpirationDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBoletoUrl()
+    {
+        return $this->boletoUrl;
+    }
+
+    /**
+     * @param string $boletoUrl
+     */
+    public function setBoletoUrl($boletoUrl)
+    {
+        $this->boletoUrl = $boletoUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBoletoBarcode()
+    {
+        return $this->boletoBarcode;
+    }
+
+    /**
+     * @param string $boletoBarcode
+     */
+    public function setBoletoBarcode($boletoBarcode)
+    {
+        $this->boletoBarcode = $boletoBarcode;
     }
 }
